@@ -52,6 +52,9 @@ for repo in web-ui dd-source; do
   echo
 done
 
+# Make sure we have signing configured
+dd-gitsign install --remote --github "thollander" --email "terence.hollander@datadoghq.com" --name "Térence Hollander"
+
 echo
 echo "=== Installing vibe-kanban ==="
 $DOTFILES_PATH/vibe-kanban/install-vibe-kanban.sh $WORKSPACE_NAME
