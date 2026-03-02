@@ -19,6 +19,7 @@ set -euo pipefail
 DOTFILES_PATH="$HOME/dotfiles"
 
 # Symlink dotfiles to the root within your workspace
+echo "=== Linking dotfiles ==="
 find $DOTFILES_PATH -type f -path "$DOTFILES_PATH/.*" |
 while read df; do
   link=${df/$DOTFILES_PATH/$HOME}
@@ -26,16 +27,35 @@ while read df; do
   ln -sf "$df" "$link"
 done
 
-# Install and start Vibe-Kanban
-mkdir -p $HOME/vibe-kanban
-cd $HOME/vibe-kanban
-npm install vibe-kanban
-cat << 'EOF' > $HOME/vibe-kanban/run.sh
-#!/usr/bin/env sh
-HOST=127.0.0.1 PORT=42091 node $HOME/vibe-kanban/node_modules/.bin/vibe-kanban
-EOF
-chmod +x $HOME/vibe-kanban/run.sh
-touch $HOME/vibe-kanban/log.log
-nohup $HOME/vibe-kanban/run.sh > $HOME/vibe-kanban/log.log 2>&1 &
-echo "Vibe-Kanban started, listening on http://127.0.0.1:42091"
-echo "You can access logs at ~/vibe-kanban/log.log"
+echo
+echo "=== Configuring git ==="
+git config --global core.fsmonitor true
+git config --global feature.manyFiles true
+git config --global index.threads true
+git config --global push.autoSetupRemote true
+
+for repo in web-ui dd-source; do
+  echo "Configuring $repo..."
+
+  # Configure $repo
+  cd $HOME/go/src/github.com/DataDog/$repo
+
+  git config remote.origin.tagOpt --no-tags
+  git config remote.origin.prune true
+  git maintenance start
+
+  # Run in the background
+  (git dd add-branch-prefix terence.hollander && git update-index --index-version 4 && git update-index --really-refresh && git dd sync) &> $HOME/.git-sync-${repo}.log &
+
+  echo "Some processes will continue in the background."
+  echo "Run \"tail $HOME/.git-sync-${repo}.log\" for logs."
+  echo
+done
+
+echo
+echo "=== Installing vibe-kanban ==="
+$DOTFILES_PATH/vibe-kanban/install-vibe-kanban.sh $WORKSPACE_NAME
+$HOME/vibe-kanban/start.sh
+
+echo
+echo "=== DONE ==="
