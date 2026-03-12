@@ -58,6 +58,7 @@ dd-gitsign install --remote --github "thollander" --email "terence.hollander@dat
 echo
 echo "=== Installing Graphite ==="
 npm install -g @withgraphite/graphite-cli@stable
+gt completion >> ~/.zshrc
 
 echo
 echo "=== Installing vibe-kanban ==="
