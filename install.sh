@@ -62,7 +62,10 @@ echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 
 echo
 echo "=== Installing Graphite ==="
+npm config set prefix "$HOME/.npm-global"
 npm install -g @withgraphite/graphite-cli@stable
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+export PATH="$HOME/.npm-global/bin:$PATH"
 gt completion >> ~/.zshrc
 
 echo
