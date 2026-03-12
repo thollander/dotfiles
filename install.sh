@@ -56,6 +56,11 @@ done
 dd-gitsign install --remote --github "thollander" --email "terence.hollander@datadoghq.com" --name "Térence Hollander"
 
 echo
+echo "=== Installing zsh-autosuggestions ==="
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
+
+echo
 echo "=== Installing Graphite ==="
 npm install -g @withgraphite/graphite-cli@stable
 gt completion >> ~/.zshrc
