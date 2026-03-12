@@ -56,6 +56,10 @@ done
 dd-gitsign install --remote --github "thollander" --email "terence.hollander@datadoghq.com" --name "Térence Hollander"
 
 echo
+echo "=== Installing Graphite ==="
+npm install -g @withgraphite/graphite-cli@stable
+
+echo
 echo "=== Installing vibe-kanban ==="
 $DOTFILES_PATH/vibe-kanban/install-vibe-kanban.sh $WORKSPACE_NAME
 $HOME/vibe-kanban/start.sh
