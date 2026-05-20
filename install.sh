@@ -69,9 +69,4 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 gt completion >> ~/.zshrc
 
 echo
-echo "=== Installing vibe-kanban ==="
-$DOTFILES_PATH/vibe-kanban/install-vibe-kanban.sh $WORKSPACE_NAME
-$HOME/vibe-kanban/start.sh
-
-echo
 echo "=== DONE ==="
