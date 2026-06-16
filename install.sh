@@ -69,4 +69,11 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 gt completion >> ~/.zshrc
 
 echo
+echo "=== Installing fzf and zoxide ==="
+brew install fzf zoxide
+"$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
+echo 'source <(fzf --zsh)' >> ~/.zshrc
+echo 'eval "$(zoxide init zsh)"' >> ~/.zshrc
+
+echo
 echo "=== DONE ==="
