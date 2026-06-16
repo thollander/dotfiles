@@ -69,11 +69,21 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 gt completion >> ~/.zshrc
 
 echo
-echo "=== Installing fzf and zoxide ==="
-brew install fzf zoxide
-"$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
-echo 'source <(fzf --zsh)' >> ~/.zshrc
+echo "=== Installing fzf ==="
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --key-bindings --completion --no-bash --no-fish
+
+echo
+echo "=== Installing zoxide ==="
+curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 echo 'eval "$(zoxide init zsh)"' >> ~/.zshrc
+
+echo
+echo "=== Installing sesh ==="
+mkdir -p "$HOME/.local/bin"
+SESH_VERSION=$(curl -s https://api.github.com/repos/joshmedeski/sesh/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+curl -sL "https://github.com/joshmedeski/sesh/releases/download/${SESH_VERSION}/sesh_Linux_x86_64.tar.gz" | tar -xz -C "$HOME/.local/bin" sesh
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 
 echo
 echo "=== DONE ==="
